@@ -57,7 +57,9 @@ def generate_insights():
     with open(f'./json/{data['filename']}.json', 'r') as f:
         dataj = json.load(f)
         json_data = dataj
-        json_data['insights'] = json_data['insights'][9:-6]
+        # json_data['insights'] = json_data['insights'][9:-6]
+        json_data['insights'] = json_data['insights'].replace("\n","")
+        json_data['insights'] = json_data['insights'].replace(" ","")
         # json_data['insights'] = json.loads(json_data['insights'])
         json_data['data'] = df.to_json(orient="records")
     
@@ -95,4 +97,4 @@ def handle_csv():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')
