@@ -1,0 +1,8 @@
+.venv
+myenv
+datasets
+improved_datasets
+testing
+json
+.env
+.flaskenv

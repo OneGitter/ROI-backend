@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Upload CSV File</h2>
+    
+    <!-- CSV Upload Form -->
+    <form id="uploadForm">
+        <input type="file" id="csvFileInput" accept=".csv" required>
+        <button type="submit">Upload CSV</button>
+    </form>
+
+    <!-- Div to show response -->
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Get the uploaded file
+            const csvFile = document.getElementById('csvFileInput').files[0];
+            if (!csvFile) {
+                alert('Please select a CSV file.');
+                return;
+            }
+
+            // Create FormData object to send the CSV file
+            const formData = new FormData();
+            formData.append('file', csvFile);
+
+            console.log(formData);
+
+            // Send the file to the backend
+            try {
+                const response = await fetch('/test', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log(response);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById('response').style.display = 'block';
+                    document.getElementById('response').innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                } else {
+                    document.getElementById('response').style.display = 'block';
+                    document.getElementById('response').innerHTML = 'Error uploading CSV.';
+                }
+            } catch (error) {
+                document.getElementById('response').style.display = 'block';
+                document.getElementById('response').innerHTML = `Error: ${error.message}`;
+            }
+        });
+    </script>
+
+</body>
+</html>
