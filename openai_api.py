@@ -38,7 +38,7 @@ def create_marketing_prompt(data_string):
 
     Suggest a detailed explanation and actionable steps to improve the performance.
 
-    Make sure to give the response in json and do not use markup.
+    Make sure to give the response in json and do not use markup, also don't use escape characters and whitespaces in the json as it's having parsing issues.
 
     Dataset:
     {data_string}

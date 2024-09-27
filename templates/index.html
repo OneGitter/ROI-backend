@@ -26,16 +26,22 @@
         <input type="file" id="csvFileInput" accept=".csv" required>
         <button type="submit">Upload CSV</button>
     </form>
+    <form id="FileInsight">
+        <input type="text" id="filename" required>
+        <button type="submit">Get insight</button>
+    </form>
 
     <!-- Div to show response -->
     <div id="response"></div>
 
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+        
+
+        document.getElementById('FileInsight').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
             // Get the uploaded file
-            const csvFile = document.getElementById('csvFileInput').files[0];
+            const csvFile = document.getElementById('filename').value;
             if (!csvFile) {
                 alert('Please select a CSV file.');
                 return;
@@ -43,13 +49,13 @@
 
             // Create FormData object to send the CSV file
             const formData = new FormData();
-            formData.append('file', csvFile);
+            formData.append('filename', csvFile);
 
             console.log(formData);
 
             // Send the file to the backend
             try {
-                const response = await fetch('/test', {
+                const response = await fetch('/generate-insights', {
                     method: 'POST',
                     body: formData
                 });
